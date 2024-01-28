@@ -40,7 +40,7 @@ k3d registry create registry.localhost --port 5500
 docker network connect k3d k3d-registry.localhost
 
 echo "install latest K3d" >> ~/status
-#wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
 echo "kic cluster create" >> ~/status
 #kic cluster create

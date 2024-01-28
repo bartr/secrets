@@ -1,0 +1,5 @@
+#!/bin/bash
+
+kic cluster delete
+
+k3d cluster create -c /workspaces/secrets/.kic/k3d.yaml --registry-use k3d-registry.localhost:5500 --k3s-arg "--disable=traefik@server:0"
