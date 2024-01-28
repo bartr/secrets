@@ -1,0 +1,64 @@
+name: Release Heartbeat
+
+# Set these GitHub Actions secrets
+#   secrets.GH_ID
+#   secrets.GH_PAT
+# Change the container registry below
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  releases-matrix:
+    name: Release Go Binary
+    runs-on: ubuntu-latest
+    env:
+      # change this to your container registry
+      IMAGE: ghcr.io/cse-labs/heartbeat
+
+    strategy:
+      matrix:
+        goos: [linux]
+        goarch: [amd64]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # add binary to release
+      - name: Build binary
+        uses: wangyoucao577/go-release-action@v1.25
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
+          project_path: "./src"
+          binary_name: "heartbeat"
+          ldflags: "-s -w -X main.Version=0.2.0"
+
+      - name: Login to Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GH_ID }}
+          password: ${{ secrets.GH_PAT }}
+
+      - name: Docker pull
+        run: |
+          docker pull golang:alpine
+          docker pull busybox
+
+      - name: Docker Build
+        run: |
+          docker build . -t image
+
+      - name: Docker Tag and Push
+        run: |
+
+          # tag the image
+          docker tag image $IMAGE:beta
+          docker tag image $IMAGE:latest
+          docker tag image $IMAGE:$(docker run --rm image -v)
+
+          # Push to the registry
+          docker push -a $IMAGE
