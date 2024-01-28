@@ -1,0 +1,17 @@
+###
+# test commands
+###
+
+commands:
+- name: test
+  short: Test Res-Edge data service
+  scriptCommands:
+    - name: all
+      short: Run Integration and Load tests
+      path: test/all
+    - name: integration
+      short: Run Integration tests
+      path: test/integration
+    - name: load
+      short: Run a short load test
+      path: test/load

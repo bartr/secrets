@@ -1,0 +1,22 @@
+#!/bin/bash
+
+echo "Running tests on the cluster with both successful and failing requests"
+
+# Integration.json is executed 5 times to generate more metrics for dashboard
+docker run --net host --rm \
+    ghcr.io/cse-labs/res-edge-webv:0.17 \
+    --server "${DS_URL}" \
+    --log-format TsvMin \
+    --timeout 5 \
+    --region Dev \
+    --zone Dev \
+    --tag Dev \
+    --max-errors 10 \
+    --summary Tsv \
+    --verbose \
+    --files load.json \
+            integration.json \
+            integration.json \
+            integration.json \
+            integration.json \
+            integration.json

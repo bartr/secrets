@@ -1,0 +1,59 @@
+###
+# check commands
+###
+
+commands:
+- name: check
+  short: Check local apps
+  scriptCommands:
+    - name: resedge
+      short: Check Res-Edge
+      path: check/resedge
+
+    - name: ui
+      short: Check Res-Edge UI
+      path: check/ui
+
+    - name: webv
+      short: Check webv
+      path: check/webv
+
+    - name: mssql
+      short: Check mssql
+      path: check/mssql
+
+    - name: fluentbit
+      short: Check fluentbit
+      path: check/fluentbit
+
+    - name: grafana
+      short: Check Grafana
+      path: check/grafana
+
+    - name: prometheus
+      short: Check Prometheus
+      path: check/prometheus
+
+    - name: flux
+      short: Check Flux service
+      path: check/flux
+
+    - name: imdb
+      short: Check imdb service
+      path: check/imdb
+
+    - name: heartbeat
+      short: Check heartbeat service
+      path: check/heartbeat
+
+    - name: redis
+      short: Check redis service
+      path: check/redis
+
+    - name: dogs-cats
+      short: Check dogs-cats service
+      path: check/dogs-cats
+
+    - name: tabs-spaces
+      short: Check tabs-spaces service
+      path: check/tabs-spaces

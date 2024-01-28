@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+if [ -z "${DS_URL}" ]; then
+    echo "Error! Please set environment variable: DS_URL";
+    exit 1;
+fi
+
+function resedge_check {
+    http "${DS_URL}"/version
+}
+
+if ! resedge_check; then
+    echo "Res-Edge Data Service is not Running";
+else
+    echo "Res-Edge Data Service is Running";
+fi

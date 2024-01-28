@@ -1,0 +1,11 @@
+#!/bin/bash
+
+function prometheus_check {
+    http localhost:30000/-/healthy
+}
+
+if ! prometheus_check; then
+    echo "Prometheus is not Running";
+else
+    echo "Prometheus is Running";
+fi
