@@ -43,7 +43,7 @@ echo "install latest K3d" >> ~/status
 wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
 echo "kic cluster create" >> ~/status
-#kic cluster create
+kic cluster create
 
 # only run apt upgrade on pre-build
 if [ "$CODESPACE_NAME" = "null" ]
