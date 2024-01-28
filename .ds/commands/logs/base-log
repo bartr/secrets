@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -e
+
+function print_usage {
+  echo "Usage:"
+  echo " ./base-log -l label -n namespace"
+  echo " ./base-log -l label -n namespace -f #to follow"
+}
+
+FOLLOW=false
+NAMESPACE=""
+LABEL=""
+
+#read the options
+TEMP=$(getopt -o 'l:n:f' --long label:,namespace:,follow -- "$@")
+eval set -- "$TEMP"
+
+# extract options and their arguments into variables.
+while true ; do
+    case "${1}" in
+        -l|--label)
+            LABEL=$2 ; shift 2 ;;
+        -n|--namespace)
+            NAMESPACE=$2 ; shift 2 ;;
+        -f|--follow)
+            FOLLOW='true' ; shift ;;
+        --) shift ; break ;;
+        *) print_usage ; exit 1 ;;
+    esac
+done
+
+if [ -z "${LABEL}" ]
+then
+      echo "Error: -l/-label parameter is required";
+      exit 1;
+fi
+
+if [ -z "${NAMESPACE}" ]
+then
+      echo "Error: -n/-namespace parameter is required";
+      exit 1;
+fi
+
+if [ "${FOLLOW}" = true ]; then
+        kubectl logs -l "${LABEL}" -n "${NAMESPACE}" --follow
+else
+        kubectl logs -l "${LABEL}" -n "${NAMESPACE}" --tail=50
+fi

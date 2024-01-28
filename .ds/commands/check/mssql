@@ -1,0 +1,20 @@
+#!/bin/bash
+
+function sql_check {
+    sql -Q \
+    "select 'AddOns' as Entity, count(Id) as Rows from Applications where Type = 'AddOn' union
+    select 'Applications', count(Id) from Applications where Type = 'Application' union
+    select 'Clusters', count(Id) from Clusters union
+    select 'Groups', count(Id) from Groups where Id > 0 and Type = 'Group' union
+    select 'Labels', count(Id) from Groups where Id > 0 and Type = 'Label' union
+    select 'GroupsClusters', count(ClusterId) from GroupsClusters union
+    select 'Namespaces', count(Id) from Namespaces union
+    select 'Policies', count(Id) from Policies
+    order by 1;"
+}
+
+if ! sql_check; then
+    echo "MSSQL is not Running";
+else
+    echo "MSSQL is Running";
+fi

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+echo "Running integration tests on the cluster with failing requests (400 and 404)"
+
+#!/bin/bash
+
+docker run --net host --rm \
+    ghcr.io/cse-labs/res-edge-webv:0.17 \
+    --server "${DS_URL}" \
+    --log-format TsvMin \
+    --timeout 5 \
+    --region Dev \
+    --zone Dev \
+    --tag Dev \
+    --run-loop  \
+    --port 8080 \
+    --sleep 100 \
+    --duration 5 \
+    --files load.json

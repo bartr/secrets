@@ -1,0 +1,19 @@
+###
+# port-forward commands
+###
+
+commands:
+- name: port-forward
+  short: Forward Kubernetes ports to localhost
+  scriptCommands:
+    - name: mssql
+      short: Forward MSSQL to 31433
+      path: port-forward/mssql
+
+    - name: api
+      short: Forward API to 32080
+      path: port-forward/api
+
+    - name: ui
+      short: Forward UI to 8080
+      path: port-forward/ui

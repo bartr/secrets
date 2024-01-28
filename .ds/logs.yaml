@@ -1,0 +1,35 @@
+###
+# log commands
+###
+
+commands:
+- name: logs
+  short: View logs
+  scriptCommands:
+    - name: resedge
+      short: View ResEdge API logs
+      path: logs/base-log -l app=api -n res-edge
+
+    - name: ui
+      short: View ResEdge UI logs
+      path: logs/base-log -l app=ui -n res-edge
+
+    - name: webv
+      short: View WebV logs
+      path: logs/base-log -l app=webv -n res-edge
+
+    - name: mssql
+      short: View MSSQL logs
+      path: logs/base-log -l app=mssql -n res-edge
+
+    - name: fluentbit
+      short: View Fluent Bit logs
+      path: logs/base-log -l "app.kubernetes.io/name"=fluentbit -n logging
+
+    - name: grafana
+      short: View Grafana logs
+      path: logs/base-log -l app=grafana -n monitoring
+
+    - name: prometheus
+      short: View Prometheus logs
+      path: logs/base-log -l app=prometheus-server -n monitoring

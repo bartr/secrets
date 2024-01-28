@@ -26,7 +26,8 @@
 				"mutantdino.resourcemonitor",
 				"humao.rest-client",
 				"timonwong.shellcheck",
-				"golang.go"
+				"golang.go",
+				"ms-mssql.mssql"
 			]
 		}
 	},

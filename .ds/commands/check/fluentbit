@@ -1,0 +1,9 @@
+#!/bin/bash
+
+FLUENTBIT_IS_RUNNING=$(kubectl get pods -l app.kubernetes.io/name=fluentbit -n logging -o jsonpath='{..status.conditions[?(@.type=="Ready")].status}')
+
+if [ "${FLUENTBIT_IS_RUNNING}" == "True" ]; then
+    printf "\n Fluent Bit is Running \n";
+else
+    printf "\n Fluent Bit is Not Running \n";
+fi

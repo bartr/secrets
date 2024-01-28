@@ -1,0 +1,27 @@
+###
+# webv config
+###
+
+image: ghcr.io/cse-labs/res-edge-webv:0.17
+server:  "${DS_URL}"
+logformat: TsvMin
+verbose: false
+verboseerrors: false
+timeout: 30
+region: "Dev"
+zone: "Dev"
+tag: "Dev"
+urlprefix: ""
+
+integration:
+  files: integration.json
+  sleep: 0
+  maxerrors: 10
+  summary: Tsv
+
+load:
+  files: load.json
+  sleep: 10
+  duration: 30
+  random: false
+  port: 8080
