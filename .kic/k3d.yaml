@@ -38,4 +38,4 @@ servers: 1
 volumes:
 - nodeFilters:
   - server:0
-  volume: $KIC_BASE/src/secrets:/secrets
+  volume: /workspaces/secrets/secrets:/secrets
