@@ -16,14 +16,7 @@ RUN echo "$(date +'%Y-%m-%d %H:%M:%S')    docker build start" >> "/home/${USERNA
     mkdir -p "/home/${USERNAME}/.config/vscode-dev-containers" && \
     echo "export GOPATH=/home/${USERNAME}/go" >> /etc/zsh/zshrc && \
     wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | TAG=v5.4.6 bash && \
-    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
-    curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/msprod.list && \
     apt-get update && \
-    ACCEPT_EULA=y apt-get install -y mssql-tools unixodbc-dev && \
-    mkdir -p /usr/local/bin && \
-    cd /usr/local/bin && \
-    curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash && \
-    cd $OLD_PWD && \
     mkdir -p /usr/local/etc/vscode-dev-containers && \
     echo "👋 Welcome to Codespaces!" > /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \
     echo "" >> /usr/local/etc/vscode-dev-containers/first-run-notice.txt && \

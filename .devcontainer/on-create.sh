@@ -76,7 +76,7 @@ echo "kic cluster create"
 kic cluster create
 
 echo "Pulling docker images"
-docker pull go:latest
+docker pull golang:latest
 
 sudo apt-get update
 
