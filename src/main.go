@@ -171,7 +171,7 @@ func secretsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Cache-Control", "no-cache")
 
 	// Specify the directory path
-	dirPath := "secrets"
+	dirPath := "secretsvol"
 
 	// Check if the directory exists
 	if _, err := os.Stat(dirPath); os.IsNotExist(err) {
