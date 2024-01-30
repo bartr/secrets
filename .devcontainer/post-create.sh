@@ -1,10 +1,15 @@
 #!/bin/bash
 
-echo "post-create start" >> ~/status
+# this runs at Codespace creation - not part of pre-build
 
-# this runs in background after UI is available
+echo "post-create start"
+echo "$(date +'%Y-%m-%d %H:%M:%S')    post-create start" >> "$HOME/status"
+
+echo "update CLI"
+.devcontainer/cli-update.sh
 
 echo "update oh-my-zsh"
 git -C "$HOME/.oh-my-zsh" pull
 
-echo "post-create complete" >> ~/status
+echo "post-create complete"
+echo "$(date +'%Y-%m-%d %H:%M:%S')    post-create complete" >> "$HOME/status"

@@ -14,7 +14,7 @@ import (
 )
 
 // default values
-var uri = "/secrets/"
+var uri = "/secrets"
 var port = 8080
 var logResults = false
 
@@ -38,7 +38,7 @@ func main() {
 
 // setup handlers
 func setupHandlers() {
-	// handle /secrets/
+	// handle /secrets
 	http.Handle(uri, http.HandlerFunc(secretsHandler))
 
 	// handle /healthz
@@ -51,7 +51,7 @@ func setupHandlers() {
 	http.Handle("/version", http.HandlerFunc(versionHandler))
 
 	// handle all other URIs
-	http.Handle("/", http.HandlerFunc(rootHandler))
+	//http.Handle("/", http.HandlerFunc(rootHandler))
 }
 
 // display config
@@ -71,11 +71,6 @@ func parseCommandLine() {
 	v := flag.Bool("v", false, "display version")
 
 	flag.Parse()
-
-	// add  trailing /
-	if !strings.HasSuffix(*u, "/") {
-		*u += "/"
-	}
 
 	// check URI
 	if !strings.HasPrefix(*u, "/") {
@@ -171,7 +166,7 @@ func secretsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Cache-Control", "no-cache")
 
 	// Specify the directory path
-	dirPath := "secrets"
+	dirPath := "secretsvol"
 
 	// Check if the directory exists
 	if _, err := os.Stat(dirPath); os.IsNotExist(err) {
@@ -190,18 +185,19 @@ func secretsHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Iterate over each file in the directory
 	for _, fileInfo := range fileInfos {
-		filePath := filepath.Join(dirPath, fileInfo.Name())
+		if !fileInfo.IsDir() {
+			filePath := filepath.Join(dirPath, fileInfo.Name())
 
-		// Read the contents of the file
-		fileContent, err := ioutil.ReadFile(filePath)
-		if err != nil {
-			fmt.Fprintf(w, "Error reading file %s: %v\n", fileInfo.Name(), err)
-			logToConsole(500, r.URL.Path, time.Since(start))
-			continue
+			// Read the contents of the file
+			fileContent, err := ioutil.ReadFile(filePath)
+			if err != nil {
+				// skip any file we can't read
+				continue
+			}
+
+			// Print the file name, a colon, a space, and the file contents
+			fmt.Fprintf(w, "%s: %s\n", fileInfo.Name(), fileContent)
 		}
-
-		// Print the file name, a colon, a space, and the file contents
-		fmt.Fprintf(w, "%s: %s\n", fileInfo.Name(), fileContent)
 	}
 
 	logToConsole(http.StatusOK, r.URL.Path, time.Since(start))

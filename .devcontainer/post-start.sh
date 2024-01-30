@@ -1,10 +1,12 @@
 #!/bin/bash
 
-echo "post-start start" >> ~/status
+# this runs each time the container starts
 
-# this runs in background each time the container starts
+echo "post-start start"
+echo "$(date +'%Y-%m-%d %H:%M:%S')    post-start start" >> "$HOME/status"
 
-# pull docker base image
+echo "Pulling docker images"
 docker pull golang:latest
 
-echo "post-start complete" >> ~/status
+echo "post-start complete"
+echo "$(date +'%Y-%m-%d %H:%M:%S')    post-start complete" >> "$HOME/status"

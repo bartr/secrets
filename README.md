@@ -4,13 +4,11 @@
 
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-- Docker Container Registry
-  - <https://github.com/orgs/cse-labs/packages/container/package/heartbeat>
-- `make local` will build the Linux and Windows binaries locally
-
 ## Project Description
 
-Probes
+Do NOT deploy this to production! This is for testing that your secrets are correctly set during development.
+
+## Probes
 
 - `/healthz`
 - `/readyz`
@@ -21,7 +19,6 @@ Probes
 - -uri URI to listen on - default: /secrets
   - Cannot be `/`
 - -port port to listen on - default: 8080
-  - Valid port - 1 - 64K
 - -log log incoming requests to stdout - default: false
 - -v display version
 
@@ -37,29 +34,36 @@ make build
 # run the local docker image
 make run
 
-# check the semver
-curl localhost:8080/version
-
-# server and password
+# check the secrets (from ./secretsvol)
 curl localhost:8080/secrets
-
-# check the logs
-docker logs heartbeat
-
-# other options
-docker run -it --rm secrets -h
-
-# test secrets with WebV
-make test
 
 ```
 
-### CI-CD via GitHub Action
+## Deploy Secrets to Kubernetes
 
-> You will need to edit the repo name and make sure you have the secrets setup
+```bash
 
-- GitHub Actions (ci-cd pipelines)
-  - [Build container image](./.github/workflows/build.yaml)
+## create a K3d cluster in your Codespaces
+kic cluster create
+
+## create the secrets namespace
+kubectl create ns secrets
+
+## add secrets
+kubectl create secret generic sample -n secrets \
+    --from-literal=server="k8s-server" \
+    --from-literal=password="k8s-pwd"
+
+# deploy to k8s
+kubectl apply -f deploy
+
+# check pods
+kubectl get pods -n secrets
+
+# check values
+http localhost:30080/secrets
+
+```
 
 ## Contributing
 

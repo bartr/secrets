@@ -15,8 +15,7 @@ docker :
 	docker build . -t secrets
 
 run :
-	docker run -d --rm --name secrets -p 8080:8080 secrets
-	docker logs secrets
+	docker run -it --rm --name secrets -p 8080:8080 -v "${PWD}/secretsvol":/secretsvol secrets
 
 test :
 	@cd webv && webv --server http://localhost:8080 --files secrets.json --verbose --verbose-errors
